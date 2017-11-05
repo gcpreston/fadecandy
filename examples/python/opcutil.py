@@ -11,3 +11,11 @@ def even_spread(colors, numLEDs):
     pixels += [colors[0]] * remainder
 
     return pixels
+
+def rotate_left(pixels):
+    """Rotates the pixels to the left by one"""
+    return pixels[1:] + pixels[:1]
+
+def rotate_right(pixels):
+    """Rotates the pixels to the right by one"""
+    return pixels[-1:] + pixels[:-1]
