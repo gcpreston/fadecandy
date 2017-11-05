@@ -7,7 +7,7 @@ client = opc.Client('localhost:7890')
 num_leds = 60
 colors = [(255, 0, 0),  # red
           (255, 127, 0),  # orange
-          (255, 255, 0, 0),  # yellow
+          (255, 255, 0),  # yellow
           (0, 255, 0),  # green
           (0, 0, 255),  # blue
           (139, 0, 255)]  # violet
