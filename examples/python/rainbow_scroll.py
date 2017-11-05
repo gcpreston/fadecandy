@@ -11,7 +11,7 @@ colors = [(255, 0, 0),  # red
           (0, 255, 0),  # green
           (0, 0, 255),  # blue
           (139, 0, 255)]  # violet
-pixels = opcutil.even_spread(colors, num_leds)
+pixels = opcutil.spread(colors, num_leds, 10)
 
 while True:
     client.put_pixels(pixels)
