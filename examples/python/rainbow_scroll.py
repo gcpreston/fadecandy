@@ -16,4 +16,4 @@ pixels = opcutil.even_spread(colors, num_leds)
 while True:
     client.put_pixels(pixels)
     time.sleep(0.1)
-    pixels = rotate_right(pixels)
+    pixels = opcutil.rotate_right(pixels)
