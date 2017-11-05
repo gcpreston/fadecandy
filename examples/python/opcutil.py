@@ -13,8 +13,8 @@ def even_spread(colors, num_leds):
     return pixels
 
 
-def even_spread(colors, num_leds, pixels_per_color):
-    """Evenly spreads out the colors across the LEDs in order using the
+def spread(colors, num_leds, pixels_per_color):
+    """Spreads out the colors across the LEDs in order using the
     specified number of pixels per color."""
     pixels = []
 
