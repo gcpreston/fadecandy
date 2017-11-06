@@ -1,3 +1,4 @@
+import time
 import math
 
 def even_spread(colors, num_leds):
@@ -36,3 +37,19 @@ def rotate_left(pixels):
 def rotate_right(pixels):
     """Rotates the pixels to the right by one."""
     return pixels[-1:] + pixels[:-1]
+
+
+def scroll_left(pixels, sleep_time, client):
+    """Scrolls the pixels around once to the left."""
+    for _ in pixels:
+        client.put_pixels(pixels)
+        time.sleep(sleep_time)
+        pixels = rotate_left(pixels)
+
+
+def scroll_right(pixels, sleep_time, client):
+    """Scrolls the pixels around once to the right."""
+    for _ in pixels:
+        client.put_pixels(pixels)
+        time.sleep(sleep_time)
+        pixels = rotate_right(pixels)
