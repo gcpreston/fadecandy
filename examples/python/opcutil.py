@@ -29,14 +29,14 @@ def spread(colors, num_leds, pixels_per_color):
     return pixels
 
 
-def rotate_left(pixels):
-    """Rotates the pixels to the left by one."""
-    return pixels[1:] + pixels[:1]
+def rotate_left(pixels, n):
+    """Rotates the pixels to the left by n."""
+    return pixels[n:] + pixels[:n]
 
 
-def rotate_right(pixels):
-    """Rotates the pixels to the right by one."""
-    return pixels[-1:] + pixels[:-1]
+def rotate_right(pixels, n):
+    """Rotates the pixels to the right by n."""
+    return pixels[-n:] + pixels[:-n]
 
 
 def scroll_left(pixels, sleep_time, client):
@@ -44,7 +44,7 @@ def scroll_left(pixels, sleep_time, client):
     for _ in pixels:
         client.put_pixels(pixels)
         time.sleep(sleep_time)
-        pixels = rotate_left(pixels)
+        pixels = rotate_left(pixels, 1)
 
 
 def scroll_right(pixels, sleep_time, client):
@@ -52,4 +52,4 @@ def scroll_right(pixels, sleep_time, client):
     for _ in pixels:
         client.put_pixels(pixels)
         time.sleep(sleep_time)
-        pixels = rotate_right(pixels)
+        pixels = rotate_right(pixels, 1)
