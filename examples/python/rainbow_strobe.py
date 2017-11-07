@@ -17,6 +17,6 @@ black = [(0, 0, 0)] * num_leds
 while True:
     client.put_pixels(pixels)
     time.sleep(0.05)
-    pixels = opcutil.rotate_right(pixels)
+    pixels = opcutil.rotate_right(pixels, 2)
     client.put_pixels(black)
     time.sleep(0.05)

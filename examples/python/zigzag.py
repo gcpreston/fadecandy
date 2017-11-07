@@ -14,5 +14,5 @@ colors = [(255, 0, 0),  # red
 pixels = opcutil.spread(colors, num_leds, 10)
 
 while True:
-    opcutil.scroll_left(pixels, 0.1, client)
-    opcutil.scroll_right(pixels, 0.1, client)
+    opcutil.scroll_left(pixels, 0.02, client)
+    opcutil.scroll_right(pixels, 0.02, client)
