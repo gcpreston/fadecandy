@@ -17,7 +17,7 @@ class RaveGUI(tk.Tk):
         root.resizable(width=False, height=False)
 
         root.focus_set()
-        root.bind("<Escape>", lambda e: e.widget.quit())
+        root.bind("<Escape>", quit)
 
         if root.winfo_screenwidth() == self.width_px and root.winfo_screenheight() == self.height_px:
             root.attributes('-fullscreen', True)
@@ -33,7 +33,7 @@ class RaveGUI(tk.Tk):
         rightbottom_frame.pack(fill=tk.BOTH, expand=1)
 
         # Objects
-        exit_btn = tk.Button(left_frame, text='Exit')
+        exit_btn = tk.Button(left_frame, text='Exit', command=quit)
         exit_btn.pack(side=tk.TOP, fill=tk.X)
 
         update_btn = tk.Button(left_frame, text='Update')
@@ -50,6 +50,9 @@ class RaveGUI(tk.Tk):
 
         # Start loop
         root.mainloop()
+
+    def quit(self, e):
+        e.widget.quit()
 
 
 app = RaveGUI()
