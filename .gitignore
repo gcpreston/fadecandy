@@ -28,6 +28,6 @@ Thumbs.db
 obj/
 [Rr]elease*/
 _ReSharper*/
-examples/csharp/.vs/restore.dg
+scripts/csharp/.vs/restore.dg
 project.lock.json
-examples/python/test.py
+scripts/python/test.py
