@@ -19,7 +19,7 @@ class RaveGUI(tk.Tk):
         root.focus_set()
         root.bind("<Escape>", lambda e: e.widget.quit())
 
-        if root.winfo_screenwidth == self.width_px and root.winfo_screenheight == self.heigh_px:
+        if root.winfo_screenwidth() == self.width_px and root.winfo_screenheight() == self-height_px:
             root.attributes('-fullscreen', True)
 
         # Frames
