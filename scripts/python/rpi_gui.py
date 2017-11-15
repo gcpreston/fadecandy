@@ -1,7 +1,7 @@
 import os
 import math
 
-from multiprocessing import Process
+from subprocess import Popen
 from tkinter import Tk, Frame, Label, Button
 from tkinter import LEFT, RIGHT, TOP, BOTTOM, X, Y, BOTH
 
@@ -15,8 +15,8 @@ class RaveGUI(Tk):
                      'rpi_gui.py', 'test.py', 'color-correction-ui.py', 'usb-lowlevel.py',
                      'firmware-config-ui.py', 'opcutil.pyc']
     current_page = 0
-    lighting = Process()
     all_files = os.listdir()
+    lighting = None
 
     def __init__(self):
         for name in self.ignored_files:
@@ -24,7 +24,6 @@ class RaveGUI(Tk):
                 self.all_files.remove(name)
             except ValueError:
                 pass
-        self.lighting.start()
 
         root = Tk()
         root.title('Rave Controller')
@@ -118,9 +117,9 @@ class RaveGUI(Tk):
 
     def config_function(self, fn):
         def set_config():
-            self.lighting.terminate()
-            self.lighting = Process(target=os.system, args=('python {}'.format(fn),))
-            self.lighting.start()
+            if self.lighting:
+                self.lighting.terminate()
+            self.lighting = Popen(['python3', fn])
         return set_config
 
     def next_page(self):
