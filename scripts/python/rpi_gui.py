@@ -133,6 +133,7 @@ class RaveGUI(Tk):
 
     def update(self):
         os.system('git pull')
+        self.init_light_btns(self.current_page)
 
     def quit(self):
         self.lighting.terminate()
