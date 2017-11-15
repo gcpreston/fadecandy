@@ -1,6 +1,7 @@
 import os
 import math
 
+from multiprocessing import Process
 from tkinter import Tk, Frame, Label, Button
 from tkinter import LEFT, RIGHT, TOP, BOTTOM, X, Y, BOTH
 
@@ -12,24 +13,26 @@ class RaveGUI(Tk):
     light_btn_height = 4
     ignored_files = ['__pycache__', 'README.md', 'opc.py', 'opc.pyc', 'fastopc.py', 'opcutil.py',
                      'rpi_gui.py', 'test.py', 'color-correction-ui.py', 'usb-lowlevel.py',
-                     'firmware-config-ui.py']
+                     'firmware-config-ui.py', 'opcutil.pyc']
     current_page = 0
-
+    lighting = Process()
     all_files = os.listdir()
-    for name in ignored_files:
-        try:
-            all_files.remove(name)
-        except ValueError:
-            pass
 
     def __init__(self):
+        for name in self.ignored_files:
+            try:
+                self.all_files.remove(name)
+            except ValueError:
+                pass
+        self.lighting.start()
+
         root = Tk()
         root.title('Rave Controller')
         root.geometry('{}x{}'.format(self.width_px, self.height_px))
         root.resizable(width=False, height=False)
 
         root.focus_set()
-        root.bind("<Escape>", quit)
+        root.bind("<Escape>", self.quit)
 
         if root.winfo_screenwidth() == self.width_px and root.winfo_screenheight() == self.height_px:
             root.attributes('-fullscreen', True)
@@ -45,7 +48,7 @@ class RaveGUI(Tk):
         self.rightbottom_frame.pack(fill=BOTH, expand=1)
 
         # Objects
-        exit_btn = Button(left_frame, text='Exit', command=quit)
+        exit_btn = Button(left_frame, text='Exit', command=self.quit)
         exit_btn.pack(side=TOP, fill=X)
 
         update_btn = Button(left_frame, text='Update', command=self.update)
@@ -115,7 +118,9 @@ class RaveGUI(Tk):
 
     def config_function(self, fn):
         def set_config():
-            os.system('python {}'.format(fn))
+            self.lighting.terminate()
+            self.lighting = Process(target=os.system, args=('python {}'.format(fn),))
+            self.lighting.start()
         return set_config
 
     def next_page(self):
@@ -128,6 +133,10 @@ class RaveGUI(Tk):
 
     def update(self):
         os.system('git pull')
+
+    def quit(self):
+        self.lighting.terminate()
+        exit()
 
 
 app = RaveGUI()
