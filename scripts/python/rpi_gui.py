@@ -1,7 +1,5 @@
-# GUI for 320x240 2.8 inch Raspberry Pi touch screen
-# Features:
-# - "Update" button: pulls from GitHub
-# - Scrolling menu of lighting configurations
+import os
+import math
 
 from tkinter import Tk, Frame, Label, Button
 from tkinter import LEFT, RIGHT, TOP, BOTTOM, X, Y, BOTH
@@ -10,6 +8,19 @@ class RaveGUI(Tk):
 
     width_px = 320
     height_px = 240
+    light_btn_width = 14
+    light_btn_height = 4
+    ignored_files = ['__pycache__', 'README.md', 'opc.py', 'opc.pyc', 'fastopc.py', 'opcutil.py',
+                     'rpi_gui.py', 'test.py', 'color-correction-ui.py', 'usb-lowlevel.py',
+                     'firmware-config-ui.py']
+    current_page = 0
+
+    all_files = os.listdir()
+    for name in ignored_files:
+        try:
+            all_files.remove(name)
+        except ValueError:
+            pass
 
     def __init__(self):
         root = Tk()
@@ -30,30 +41,93 @@ class RaveGUI(Tk):
         righttop_frame = Frame(root, height=28)
         righttop_frame.pack(side=TOP, fill=X)
 
-        rightbottom_frame = Frame(root)
-        rightbottom_frame.pack(fill=BOTH, expand=1)
+        self.rightbottom_frame = Frame(root)
+        self.rightbottom_frame.pack(fill=BOTH, expand=1)
 
         # Objects
         exit_btn = Button(left_frame, text='Exit', command=quit)
         exit_btn.pack(side=TOP, fill=X)
 
-        update_btn = Button(left_frame, text='Update')
+        update_btn = Button(left_frame, text='Update', command=self.update)
         update_btn.pack(fill=BOTH, expand=1)
 
-        prev_btn = Button(righttop_frame, text='<<')
+        prev_btn = Button(righttop_frame, text='<<', command=self.next_page)
         prev_btn.pack(side=LEFT)
 
-        next_btn = Button(righttop_frame, text='>>')
+        next_btn = Button(righttop_frame, text='>>', command=self.prev_page)
         next_btn.pack(side=RIGHT)
 
         name_lbl = Label(righttop_frame, text='Rave Controller')
         name_lbl.place(relx=0.5, rely=0.5, anchor='c')
 
+        # Lighting change buttons
+        self.init_light_btns(self.current_page)
+
         # Start loop
         root.mainloop()
 
-    def quit(self, e):
-        e.widget.quit()
+    def init_light_btns(self, page):
+        # Get files for current page
+        files = self.all_files[6 * page : 6 * (page + 1)]
+        files += [''] * (6 - len(files))
+
+        light1_btn = Button(self.rightbottom_frame,
+                            width=self.light_btn_width,
+                            height=self.light_btn_height,
+                            text=files[0],
+                            command=self.config_function(files[0]))
+        light1_btn.grid(row=0, column=0)
+
+        light2_btn = Button(self.rightbottom_frame,
+                            width=self.light_btn_width,
+                            height=self.light_btn_height,
+                            text=files[1],
+                            command=self.config_function(files[1]))
+        light2_btn.grid(row=0, column=1)
+
+        light3_btn = Button(self.rightbottom_frame,
+                            width=self.light_btn_width,
+                            height=self.light_btn_height,
+                            text=files[2],
+                            command=self.config_function(files[2]))
+        light3_btn.grid(row=1, column=0)
+
+        light4_btn = Button(self.rightbottom_frame,
+                            width=self.light_btn_width,
+                            height=self.light_btn_height,
+                            text=files[3],
+                            command=self.config_function(files[3]))
+        light4_btn.grid(row=1, column=1)
+
+        light5_btn = Button(self.rightbottom_frame,
+                            width=self.light_btn_width,
+                            height=self.light_btn_height,
+                            text=files[4],
+                            command=self.config_function(files[4]))
+        light5_btn.grid(row=2, column=0)
+
+        light6_btn = Button(self.rightbottom_frame,
+                            width=self.light_btn_width,
+                            height=self.light_btn_height,
+                            text=files[5],
+                            command=self.config_function(files[5]))
+        light6_btn.grid(row=2, column=1)
+
+    def config_function(self, fn):
+        def set_config():
+            os.system('python {}'.format(fn))
+        return set_config
+
+    def next_page(self):
+        self.current_page = (self.current_page + 1) % (math.ceil(len(self.all_files) / 6))
+        self.init_light_btns(self.current_page)
+
+    def prev_page(self):
+        self.current_page = (self.current_page - 1) % (math.ceil(len(self.all_files) / 6))
+        self.init_light_btns(self.current_page)
+
+    def update(self):
+        os.system('git pull')
 
 
 app = RaveGUI()
