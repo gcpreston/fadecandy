@@ -119,7 +119,7 @@ class RaveGUI(Tk):
         def set_config():
             if self.lighting:
                 self.lighting.terminate()
-            self.lighting = Popen(['python3', fn])
+            self.lighting = Popen(['python', fn])
         return set_config
 
     def next_page(self):
