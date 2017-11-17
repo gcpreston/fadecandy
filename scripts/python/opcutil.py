@@ -29,6 +29,10 @@ def spread(colors, num_leds, pixels_per_color):
     return pixels
 
 
+def shift(current, goal, p):
+    """Returns current shifted towards goal by a factor of p (proportion)."""
+    return [current[i] + ((goal[i] - current[i]) * p) for i in range(3)]
+
 def rotate_left(pixels, n):
     """Rotates the pixels to the left by n."""
     return pixels[n:] + pixels[:n]
