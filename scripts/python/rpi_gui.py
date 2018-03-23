@@ -3,7 +3,8 @@ import math
 
 from subprocess import Popen
 from tkinter import Tk, Frame, Label, Button
-from tkinter import LEFT, RIGHT, TOP, BOTTOM, X, Y, BOTH
+from tkinter import LEFT, RIGHT, TOP, X, Y, BOTH
+
 
 class RaveGUI(Tk):
 
@@ -19,6 +20,7 @@ class RaveGUI(Tk):
     lighting = None
 
     def __init__(self):
+        super().__init__()
         for name in self.ignored_files:
             try:
                 self.all_files.remove(name)
@@ -62,7 +64,7 @@ class RaveGUI(Tk):
         name_lbl = Label(righttop_frame, text='Rave Controller')
         name_lbl.place(relx=0.5, rely=0.5, anchor='c')
 
-        # Lighting change buttons
+        # Initialize light buttons
         self.init_light_btns(self.current_page)
 
         # Start loop
@@ -74,45 +76,45 @@ class RaveGUI(Tk):
         files += [''] * (6 - len(files))
 
         self.light1_btn = Button(self.rightbottom_frame,
-                            width=self.light_btn_width,
-                            height=self.light_btn_height,
-                            text=files[0],
-                            command=self.config_function(files[0]))
+                                 width=self.light_btn_width,
+                                 height=self.light_btn_height,
+                                 text=files[0],
+                                 command=self.config_function(files[0]))
         self.light1_btn.grid(row=0, column=0)
 
         self.light2_btn = Button(self.rightbottom_frame,
-                            width=self.light_btn_width,
-                            height=self.light_btn_height,
-                            text=files[1],
-                            command=self.config_function(files[1]))
+                                 width=self.light_btn_width,
+                                 height=self.light_btn_height,
+                                 text=files[1],
+                                 command=self.config_function(files[1]))
         self.light2_btn.grid(row=0, column=1)
 
         self.light3_btn = Button(self.rightbottom_frame,
-                            width=self.light_btn_width,
-                            height=self.light_btn_height,
-                            text=files[2],
-                            command=self.config_function(files[2]))
+                                 width=self.light_btn_width,
+                                 height=self.light_btn_height,
+                                 text=files[2],
+                                 command=self.config_function(files[2]))
         self.light3_btn.grid(row=1, column=0)
 
         self.light4_btn = Button(self.rightbottom_frame,
-                            width=self.light_btn_width,
-                            height=self.light_btn_height,
-                            text=files[3],
-                            command=self.config_function(files[3]))
+                                 width=self.light_btn_width,
+                                 height=self.light_btn_height,
+                                 text=files[3],
+                                 command=self.config_function(files[3]))
         self.light4_btn.grid(row=1, column=1)
 
         self.light5_btn = Button(self.rightbottom_frame,
-                            width=self.light_btn_width,
-                            height=self.light_btn_height,
-                            text=files[4],
-                            command=self.config_function(files[4]))
+                                 width=self.light_btn_width,
+                                 height=self.light_btn_height,
+                                 text=files[4],
+                                 command=self.config_function(files[4]))
         self.light5_btn.grid(row=2, column=0)
 
         self.light6_btn = Button(self.rightbottom_frame,
-                            width=self.light_btn_width,
-                            height=self.light_btn_height,
-                            text=files[5],
-                            command=self.config_function(files[5]))
+                                 width=self.light_btn_width,
+                                 height=self.light_btn_height,
+                                 text=files[5],
+                                 command=self.config_function(files[5]))
         self.light6_btn.grid(row=2, column=1)
 
     def config_function(self, fn):
