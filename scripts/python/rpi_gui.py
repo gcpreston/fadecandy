@@ -1,7 +1,7 @@
 import os
 import math
 
-from subprocess import Popen
+from subprocess import Popen, call
 from tkinter import Tk, Frame, Label, Button
 from tkinter import LEFT, RIGHT, TOP, X, Y, BOTH
 
@@ -133,7 +133,8 @@ class RaveGUI(Tk):
         self.init_light_btns(self.current_page)
 
     def update(self):
-        os.system('git pull')
+        print('updating')
+        call(['git', 'pull'])
         self.init_light_btns(self.current_page)
 
     def quit(self):
